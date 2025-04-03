@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import User from "../model/user.js";
 import Trip from "../model/trip.js";
-import Payment from "../model/payment.js";
+import Payment from "../model/payments.js";
 import dotenv from "dotenv";
-import IndividualPayment from "../models/IndividualPayment.js";
+import IndividualPayment from "../model/indiviualPayment.js";
 
 dotenv.config();
 

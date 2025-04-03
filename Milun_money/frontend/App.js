@@ -27,7 +27,9 @@ import HomeScreen from './src/screens/HomeScreen';
 // import GroupExpenseScreen from './screens/GroupExpenseScreen';
 import LoginScreen from './src/screens/LoginScreen.js';
 import SignupScreen from './src/screens/SignupScreen.js';
+import TripDetailScreen from './src/screens/tripDetailScreen.js';
 //import PaymentScreen from './screens/PaymentScreen';
+import AddEventPage from './src/screens/AddEventScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +50,16 @@ function App() {
         <Stack.Screen
           name='Home'
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='TripDetails'
+          component={TripDetailScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='AddEventPage'
+          component={AddEventPage}
           options={{ headerShown: false }}
         />
 
