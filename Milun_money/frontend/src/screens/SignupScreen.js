@@ -1,111 +1,125 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { signup } from '../redux/slices/authSlice.js';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Import navigation hook
 import loginImage from '../../assets/loginimg.png';
 import mmlogo from '../../assets/MMLogo.png';
 
+import { signup_post } from '../services/authService';
+
 const SignupScreen = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Get navigation object
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [upiId, setUpiId] = useState(""); 
+  const [password, setPassword] = useState("");
 
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-
-  const handleSignup = () => {
-    if (!userId || !email || !password) {
-      Alert.alert("Error", "All fields are required!");
-      return;
+  const handleSignUp = async () => {
+    if (!username || !email || !password || !upiId) {
+        Alert.alert("Error", "Please fill all the details.");
+        return;
     }
-    const fakeToken = "sample-auth-token";
-    dispatch(signup({ user: { userId, email }, token: fakeToken }));
-    navigation.navigate("Home"); 
+
+    try {
+        const userData = { username, email, password, upiId };
+        const response = await signup_post(userData);
+
+        if (response.error) {
+            Alert.alert("Signup Failed", response.error);
+            console.log("Signup Failed", response.error);
+        } else {
+            Alert.alert("Signup Successful", "You can now log in.");
+            navigation.navigate("Home");
+        }
+    } catch (error) {
+        Alert.alert("Error", "Something went wrong. Please try again.");
+    }
   };
 
-	return (
+  return (
     <View style={styles.container}>
       <Image source={mmlogo} style={styles.logoimage} />
-      <Image source={loginImage} style={styles.image} />
+      <Image source={loginImage} style={styles.image} /> 
       
       <TextInput 
         style={styles.input} 
-        placeholder="User ID" 
-        value={userId}
-        onChangeText={setUserId}
+        placeholder="User ID"
+        value={username}
+        onChangeText={setUserName} 
       />
-      
       <TextInput 
         style={styles.input} 
         placeholder="Email" 
-        keyboardType="email-address" 
+        keyboardType="email-address"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={setEmail} 
       />
-      
+      <TextInput 
+        style={styles.input} 
+        placeholder="UPI ID" 
+        value={upiId}
+        onChangeText={setUpiId}
+      />
       <TextInput 
         style={styles.input} 
         placeholder="Password" 
         secureTextEntry 
         value={password}
-        onChangeText={setPassword}
+        onChangeText={setPassword} // ✅ Fixed here
       />
       
-      <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
         <Text style={styles.loginText}>Signup</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.signUpText}>Already have an account? Login</Text>
       </TouchableOpacity>
     </View>
   );
-		
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9F8",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#F8F9F8',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
-  },
-  logoimage: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-    resizeMode: "contain",
   },
   image: {
     width: 300,
     height: 300,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginBottom: 30,
   },
+  logoimage: {
+    width: 100, 
+    height: 100,
+    marginBottom: 20,
+    resizeMode: 'contain',
+  },
   input: {
-    width: "80%",
+    width: '80%',
     padding: 12,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderRadius: 5,
     marginBottom: 10,
   },
   loginButton: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
     paddingVertical: 12,
     paddingHorizontal: 100,
     borderRadius: 5,
     marginBottom: 10,
   },
   loginText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
   },
   signUpText: {
     fontSize: 14,
-    color: "black",
+    color: 'black',
     marginTop: 10,
   },
 });
