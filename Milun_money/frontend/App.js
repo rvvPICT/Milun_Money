@@ -1,13 +1,41 @@
-import React from "react";
-import { Provider } from "react-redux";
-import store from "./src/redux/store.js";
-import Navigation from "./src/navigation/Navigation.js";
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import {  createNativeStackNavigator } from '@react-navigation/native-stack'
 
-const App = () => {
+
+
+import HomeScreen from './src/screens/HomeScreen.js';
+import TripdetailScreen from './src/screens/TripdetailScreen.js';
+
+
+const Stack = createNativeStackNavigator();
+
+
+function App() {
+
   return (
-    <Provider store={store}>
-      <Navigation />
-    </Provider>
+    // <SafeAreaView style={{flex:1}}>
+    //   {/* <Homepage/> */}
+    //   <Signin/>
+    // </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='Tripdetail'
+          component={TripdetailScreen}
+          options={{headerShown:false}}
+        />
+        
+
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
+
 export default App;
