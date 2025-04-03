@@ -35,6 +35,10 @@ const HomeScreen = () => {
   const goToTripDetails = () => {
     navigation.navigate("Tripdetail");
   };
+
+  const goToexpenseDetails = () => {
+    navigation.navigate("expense1");
+  };
   
   const handleAddExpensePress = () => {
     Alert.alert("Add Expense", "You can add your expenses here!");
@@ -113,7 +117,7 @@ const HomeScreen = () => {
         {/* Add Expense Prompt Section */}
         <View style={styles.expensePromptContainer}>
           <Image 
-            source={require("../../assets/homepage2.jpg")} 
+            source={require("../../assets/withoutbg.png")} 
             style={styles.expensePromptImage} 
           />
           <View style={styles.expensePromptTextContainer}>
@@ -121,14 +125,16 @@ const HomeScreen = () => {
             <Text style={styles.expensePromptDescription}>
               Click the + button below to add your expenses for any event
             </Text>
+           
           </View>
         </View>
         
         {/* Your Expenses Section */}
-        <TouchableOpacity>
+        <TouchableOpacity>onPress={goToexpenseDetails}
           <View style={styles.expenseSectionContainer}>
             <Text style={styles.expenseSectionTitle}>Your Expenses</Text>
             <View style={styles.expenseSectionUnderline} />
+            
             
             {/* Empty state or placeholder for expenses */}
             <View style={styles.emptyExpenseContainer}>
@@ -272,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1b1a56",
   },
   viewEventButton: {
-    backgroundColor: "#f5b742",
+    backgroundColor: "#d5429b",
   },
   buttonText: {
     color: "white",
