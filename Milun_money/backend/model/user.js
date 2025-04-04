@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    Trips : [
+        {
+            type: mongoose.Schema.Types.ObjectId ,
+            ref : "Trip"
+        }
+    ]
 }, { timestamps: true });
 
 const User = mongoose.model("User", UserSchema);

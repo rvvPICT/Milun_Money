@@ -1,10 +1,12 @@
 import axios from "axios" ;
 
-const API_BASE_URL = "http://localhost:5000/api/trips" ;
+const API_BASE_URL = "http://localhost:5001/api/trips" ;
 
 export const createTrip = async (tripData) => {
     try {
+        console.log("In Api services") ;
         const response = await axios.post(`${API_BASE_URL}/create` , tripData) ;
+        console.log("This was response from api services")
         return response.data ;     
     }catch(error){
         console.log("Error in creating trip :" , error.response?.data || error.message) ;
@@ -21,6 +23,7 @@ export const getTrip = async (tripId) => {
         return {success : false , message : error.response?.data.message || error.message } ;
     }
 };
+
 
 export const getAllTrips = async() =>{
     try{

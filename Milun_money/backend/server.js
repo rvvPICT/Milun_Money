@@ -20,9 +20,9 @@ app.use(express.json());
 // app.use("/api/projects", projectRoutes);
 app.use("/api/auth/users", authRoutes);
 app.use("/api/trips" , tripRoutes) ;
-app.use("api/userpayment" , userPayment) ;
+//app.use("api/userpayment" , userPayment) ;
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log("MONGO_URI:", process.env.MONGO_URI);

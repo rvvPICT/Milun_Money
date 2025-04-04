@@ -22,6 +22,7 @@ const HomeScreen = () => {
 
   const handleAddEventPress = () => {
     Alert.alert("Add Event", "Redirecting to event creation!");
+    navigation.navigate("AddEventPage")
   };
 
   const handleEndEventPress = (eventName) => {
@@ -36,12 +37,18 @@ const HomeScreen = () => {
   const goToTripDetails = () => {
     navigation.navigate("TripDetails");
   };
-  
+
+
   const handleAddExpensePress = () => {
     // Alert.alert("Add Expense", "You can add your expenses here!");
-    navigation.navigate("AddEventPage")
+    navigation.navigate("AddPaymentPage")
+    
   };
 
+  const handleYourExpense = () => {
+    //Alert.alert("Click Here !") ;
+    navigation.navigate("ExpenseScreen") ;
+  }
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Logo Section with purple header - Fixed */}
@@ -127,7 +134,7 @@ const HomeScreen = () => {
         </View>
         
         {/* Your Expenses Section */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleYourExpense}>
           <View style={styles.expenseSectionContainer}>
             <Text style={styles.expenseSectionTitle}>Your Expenses</Text>
             <View style={styles.expenseSectionUnderline} />

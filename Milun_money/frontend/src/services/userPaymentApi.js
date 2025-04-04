@@ -1,6 +1,6 @@
 import axios from "axios" ;
 
-const API_BASE_URL = "http://localhost:5000/api/user" ;
+const API_BASE_URL = "http://localhost:5001/api/user" ;
 
 export const getIndividualPayments = async (userId) => {
     try {

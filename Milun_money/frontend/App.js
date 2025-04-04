@@ -30,8 +30,10 @@ import SignupScreen from './src/screens/SignupScreen.js';
 import TripDetailScreen from './src/screens/tripDetailScreen.js';
 //import PaymentScreen from './screens/PaymentScreen';
 import AddEventPage from './src/screens/AddEventScreen.js';
-
+import AddPaymentPage from './src/screens/AddPaymentScreen.js';
+import ExpenseScreen from './src/screens/ExpenseScreen.js'
 const Stack = createNativeStackNavigator();
+
 
 function App() {
   return (
@@ -60,6 +62,17 @@ function App() {
         <Stack.Screen
           name='AddEventPage'
           component={AddEventPage}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name='AddPaymentPage'
+          component={AddPaymentPage}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='ExpenseScreen'
+          component={ExpenseScreen}
           options={{ headerShown: false }}
         />
 

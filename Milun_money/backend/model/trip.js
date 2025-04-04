@@ -13,7 +13,7 @@ const tripSchema = new mongoose.Schema({
     },
     startDate: {
         type: Date,
-        required: true,
+        //required: true,
     },
     isFinished: {
         type: Boolean,

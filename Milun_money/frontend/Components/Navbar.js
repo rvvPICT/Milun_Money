@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, Pressable, StyleSheet, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+
 const Navbar = (props) => {
   const { title, showBackButton = true, onBackPress, customAction } = props;
   const navigation = useNavigation();
@@ -30,12 +31,7 @@ const Navbar = (props) => {
   const screensWithConfirmation = ["AddExpense", "EditBudget", "CreateBudget"];
 
   const handleBackPress = () => {
-
-    if (onBackPress) {
-      onBackPress();
-      return;
-    }
-      navigation.goBack();
+      navigation.navigate("Home");
 };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
-
+import Navbar from "../../Components/Navbar";
 const TripDetailScreen = () => {
   const members = ["Alice", "Bob", "Charlie", "David"];
   const expenses = [
@@ -19,8 +19,11 @@ const TripDetailScreen = () => {
 
   return (
     <View style={styles.container}>
+        <Navbar title="Trip Details"/>
+        
+        <Text style={styles.eventName}>Trip to Goa</Text>
       <Image source={require("../../assets/viewtrip.jpg")} style={styles.image} />
-      <Text style={styles.eventName}>Trip to Goa</Text>
+      
       
       <Text style={styles.sectionTitle}>Members</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.membersScroll}>
