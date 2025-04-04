@@ -14,6 +14,11 @@ import WhoOwesYouScreen from './src/screens/WhooweScreen.js';
 import YouOweScreen from './src/screens/YouoweScreen.js';
 import IndividualExpenseScreen from './src/screens/IndividualexpScreen.js';
 import TripExpenseScreen from './src/screens/TripexpScreen.js';
+import HSRPayTesting from './src/screens/HSRPayTesting.js';
+import RPayTestingScreen from './src/screens/RPayTestingScreen.js';
+import PaymentSuccessScreen from './src/screens/PaymentSuccessScreen.js';
+import PaymentFailureScreen from './src/screens/PaymentFailureSCreen.js';
+import BudgetQuestionnaireScreen from './src/screens/BudgetQuestionnaireScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +89,31 @@ function App() {
         <Stack.Screen
           name='Exp4'
           component={TripExpenseScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='HSRPayTesting'
+          component={HSRPayTesting}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='RPayTestingScreen'
+          component={RPayTestingScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='PaymentSuccessScreen'
+          component={PaymentSuccessScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='PaymentFailureScreen'
+          component={PaymentFailureScreen}
+          options={{headerShown:false}}
+        />
+        <Stack.Screen
+          name='ManageYourBudget'
+          component={BudgetQuestionnaireScreen}
           options={{headerShown:false}}
         />
         

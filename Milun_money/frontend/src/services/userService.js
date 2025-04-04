@@ -6,6 +6,16 @@ const API_URL = Platform.OS === 'ios'
     ? 'http://localhost:5001/api/users' 
     : 'http://10.0.2.2:5001/api/users';
 
+    export const fetchAllUsersAPI = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        return response.data;
+      } catch (error) {
+        console.error("API Error while fetching users:", error);
+        throw error;
+      }
+    };
+
 export const fetchUserByIdAPI = async (userId) => {
   try {
     const response = await axios.get(`${API_URL}/${userId}`);

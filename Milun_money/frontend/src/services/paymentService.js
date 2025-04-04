@@ -8,7 +8,7 @@ const API_URL = Platform.OS === 'ios'
 
 export const addPayment = async (paymentData) => {
   try {
-    const res = await axios.post(`${API_URL}/create`, paymentData);
+    const res = await axios.post(API_URL, paymentData);
     return res.data;
   } catch (err) {
     throw err;

@@ -1,5 +1,16 @@
 import User from "../model/user.js";
 
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, "-password"); // Exclude password field
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 export const getUserById = async (req, res) => {
   const { id } = req.params;
   try {

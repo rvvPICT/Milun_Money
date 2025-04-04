@@ -487,6 +487,11 @@ const HomeScreen = ({route}) => {
   const handleYourExpense = () => {
     navigation.navigate("ExpenseScreen", { userId }) ;
   }
+
+  const handleManageYourBudget = () => {
+    navigation.navigate("ManageYourBudget" , {userId}) ;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Logo Section with purple header - Fixed */}
@@ -501,7 +506,7 @@ const HomeScreen = ({route}) => {
       </View>
 
       {/* Main Scrollable Content */}
-      <View 
+      <ScrollView 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
@@ -564,17 +569,14 @@ const HomeScreen = ({route}) => {
         </TouchableOpacity>
         
         {/* Add Expense Prompt Section */}
-        <TouchableOpacity onPress={handleYourExpense}>
+        <TouchableOpacity onPress={handleManageYourBudget}>
           <View style={styles.expensePromptContainer}>
             <Image 
               source={require("../../assets/homepage2.jpg")} 
               style={styles.expensePromptImage} 
             />
             <View style={styles.expensePromptTextContainer}>
-              <Text style={styles.expensePromptTitle}>Track Your Expenses</Text>
-              {/* <Text style={styles.expensePromptDescription}>
-                Click the + button below to add your expenses for any event
-              </Text> */}
+              <Text style={styles.expensePromptTitle}>Manage Your Budget</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -592,23 +594,23 @@ const HomeScreen = ({route}) => {
         </View> */}
         
         {/* Your Expenses Section */}
-        {/* <TouchableOpacity onPress={handleYourExpense}>
+        <TouchableOpacity onPress={handleYourExpense}>
           <View style={styles.expenseSectionContainer}>
             <Text style={styles.expenseSectionTitle}>Your Expenses</Text>
             <View style={styles.expenseSectionUnderline} />
             
-            <View style={styles.emptyExpenseContainer}>
+            {/* <View style={styles.emptyExpenseContainer}>
               <Text style={styles.emptyExpenseText}>
                 Track Your Expense 
               </Text>
-            </View>
+            </View> */}
           </View>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         {/* Add padding at bottom to ensure content isn't hidden behind the plus button */}
         <View style={styles.bottomPadding} />
-      </View>
-
+      
+        </ScrollView>
       {/* Plus Logo Button - Fixed at the bottom center */}
       <TouchableOpacity 
         style={styles.plusButtonContainer}
@@ -618,6 +620,16 @@ const HomeScreen = ({route}) => {
           <Text style={styles.plusIcon}>+</Text>
         </View>
       </TouchableOpacity>
+      
+
+      {/* <TouchableOpacity 
+        style={styles.plusButtonContainer}
+        onPress={() => navigation.navigate("HSRPayTesting", {userId})}
+      >
+        <View style={styles.plusButton}>
+          <Text style={styles.plusIcon}>+</Text>
+        </View>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 };

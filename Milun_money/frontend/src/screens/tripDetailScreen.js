@@ -46,19 +46,20 @@ const TripDetailScreen = ({ route }) => {
   };
 
   const expenses = [
-    { item: "Food", amount: "₹100" },
-    { item: "Boating", amount: "₹300" },
-    { item: "Hotel", amount: "₹500" },
+    { item: "Ice Cream", amount: "₹100" },
+    { item: "Burger", amount: "₹300" },
+    { item: "Pizza", amount: "₹500" },
   ];
 
   const receivables = [
-    { name: "Bob", amount: "₹200" },
-    { name: "Charlie", amount: "₹150" },
+    { name: "Sharvari", amount: "₹200" },
+    { name: "Veda", amount: "₹150" },
+
   ];
 
   const payables = [
-    { name: "David", amount: "₹250" },
-    { name: "Eve", amount: "₹100" },
+    { name: "Riddhi", amount: "₹250" },
+    { name: "Vedika", amount: "₹100" },
   ];
 
   const renderMember = ({ item }) => (
@@ -71,7 +72,7 @@ const TripDetailScreen = ({ route }) => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <Navbar title="Trip Details" />
+        <Navbar title="Event Details" />
         <ActivityIndicator size="large" color="#1b1a56" />
         <Text style={{ marginTop: 10 }}>Loading trip details...</Text>
       </View>
