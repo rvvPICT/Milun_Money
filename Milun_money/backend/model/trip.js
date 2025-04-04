@@ -11,10 +11,6 @@ const tripSchema = new mongoose.Schema({
     tripAmount: {
         type: Number,
     },
-    startDate: {
-        type: Date,
-        required: true,
-    },
     isFinished: {
         type: Boolean,
         default: false,

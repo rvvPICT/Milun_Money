@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'; // Import navigation h
 import loginImage from '../../assets/loginimg.png';
 import mmlogo from '../../assets/MMLogo.png';
 
-import { signup_post } from '../services/authService';
+import { signup_post } from '../services/authService.js';
 
 const SignupScreen = () => {
   const navigation = useNavigation(); // Get navigation object
@@ -12,6 +12,7 @@ const SignupScreen = () => {
   const [email, setEmail] = useState("");
   const [upiId, setUpiId] = useState(""); 
   const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState("");
 
   const handleSignUp = async () => {
     if (!username || !email || !password || !upiId) {
@@ -27,8 +28,8 @@ const SignupScreen = () => {
             Alert.alert("Signup Failed", response.error);
             console.log("Signup Failed", response.error);
         } else {
-            Alert.alert("Signup Successful", "You can now log in.");
-            navigation.navigate("Home");
+            setUserId(response.userId);
+            navigation.navigate("Home", { userId });
         }
     } catch (error) {
         Alert.alert("Error", "Something went wrong. Please try again.");

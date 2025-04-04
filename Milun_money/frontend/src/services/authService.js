@@ -1,7 +1,12 @@
 import axios from 'axios' ;
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://10.0.2.2:5000/api/auth/users';
+// const API_URL = 'http://10.0.2.2:8080/api/auth/users';
+import { Platform } from 'react-native';
+
+const API_URL = Platform.OS === 'ios' 
+    ? 'http://localhost:5001/api/auth/users' 
+    : 'http://10.0.2.2:5001/api/auth/users';
 
 export const signup_post = async (userData) => {
     try {
@@ -29,3 +34,4 @@ export const login_post = async (userData) => {
         return { error: error.response?.data?.message || "Login failed" };
     }
 };
+

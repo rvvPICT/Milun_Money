@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'; // ✅ Import navigati
 import loginImage from '../../assets/loginimg.png';
 import mmlogo from '../../assets/MMLogo.png';
 
-import { login_post } from '../services/authService'; // Ensure this function is correctly defined
+import { login_post } from '../services/authService.js'; // Ensure this function is correctly defined
 
 const LoginScreen = () => {
   const navigation = useNavigation(); // ✅ Use navigation hook
@@ -35,6 +35,8 @@ const LoginScreen = () => {
       Alert.alert("Login Failed", "An unexpected error occurred. Please try again.");
     }
   };
+
+  
 
   return (
     <View style={styles.container}>
