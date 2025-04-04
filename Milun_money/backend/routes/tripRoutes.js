@@ -5,8 +5,11 @@ const router = express.Router();
 
 router.post('/create', createTrip);
 router.get('/:tripId', getTrip);
-router.get('/', getAllTrips);
+router.get('/all', getAllTrips);
 router.get('/user/:userId', getUserTrips);
-router.get("/:tripId", getTripDetails);
+//router.get("/:tripId", getTripDetails);
 
 export default router;
+
+
+

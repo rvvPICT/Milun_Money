@@ -1,28 +1,50 @@
-import React from "react";
+import React , {useEffect , useState}from "react";
 import { 
-  View, Image, StyleSheet, TouchableOpacity, Text, ScrollView, Dimensions, Alert, ImageBackground, SafeAreaView
+  View, Image, StyleSheet, TouchableOpacity, Text, ScrollView, Dimensions, Alert, ImageBackground, SafeAreaView , FlatList
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-
+import { getUserTrips } from "../services/tripService";
 const { width } = Dimensions.get("window");
 
-// Updated events array with image properties
-const events = [
-  { id: 1, name: "Goa Trip", image: require("../../assets/homeimg1.jpg") },
-  { id: 2, name: "Hill Trek", image: require("../../assets/homeimg2.jpg") },
-  { id: 3, name: "Beach Party", image: require("../../assets/homeimg3.jpg") },
-  { id: 4, name: "Road Trip", image: require("../../assets/homeimg1.jpg") },
-];
-
-const HomeScreen = () => {
+const HomeScreen = ({route}) => {
+  const { userId } = route.params ;
+  console.log("Received user name in Home :" , userId) ;
   const navigation = useNavigation();
+
+  const [events , setEvents] = useState([]) ;
+  const [loading , setLoading] = useState(true) ;
+
+  const eventImages = [
+    require("../../assets/homeimg1.jpg") ,
+    require("../../assets/homeimg2.jpg") ,
+    require("../../assets/homeimg3.jpg")
+  ];
+  
+  useEffect(()=>{
+    fetchTrips() ;
+  },[]) ;
+  const fetchTrips = async () => {
+    try{
+      console.log("In fetchTrip Homescreen : " , userId) ;
+      const response = await getUserTrips(userId) ;
+      if(response && response.success){
+        setEvents(response.trips) ;
+      }else{
+        console.log("Failed to fetch Trips" , error.message) ;
+      }
+    }catch(error){
+      console.log("Error in fetching trips" , error) ;
+    }finally{
+      setLoading(false) ;
+    }
+  }
   const handleProfilePress = () => {
     Alert.alert("Profile Button Pressed", "You can navigate to Profile Screen!");
   };
 
   const handleAddEventPress = () => {
     Alert.alert("Add Event", "Redirecting to event creation!");
-    navigation.navigate("AddEventPage")
+    navigation.navigate("AddEventPage" , {userId})
   };
 
   const handleEndEventPress = (eventName) => {
@@ -34,8 +56,8 @@ const HomeScreen = () => {
     Alert.alert("View Event", `Opening details for ${eventName}`);
   };
   
-  const goToTripDetails = () => {
-    navigation.navigate("TripDetails");
+  const goToTripDetails = (tripId) => {
+    navigation.navigate("TripDetails" , {userId , tripId});
   };
 
 
@@ -73,43 +95,49 @@ const HomeScreen = () => {
           <View style={styles.headingUnderline} />
         </View>
 
-        {/* Event Section with Horizontal Scroll */}
-        <ScrollView 
-          horizontal
-          showsHorizontalScrollIndicator={false} 
-          contentContainerStyle={styles.eventScrollView}
-          decelerationRate="fast"
-          snapToInterval={width * 0.85 + 20}
-          snapToAlignment="center"
-        >
-          {events.map((event) => (
-            <View key={event.id} style={styles.eventCardContainer}>
-              <ImageBackground 
-                source={event.image} 
-                style={styles.eventCardBackground}
-                resizeMode="cover"
-              >
-                <View style={styles.eventCardOverlay}>
-                  <Text style={styles.eventName}>{event.name}</Text>
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity 
-                      style={[styles.button, styles.endEventButton]} 
-                      onPress={() => handleEndEventPress(event.name)}
-                    >
-                      <Text style={styles.buttonText}>End Event</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                      style={[styles.button, styles.viewEventButton]} 
-                      onPress={goToTripDetails}
-                    >
-                      <Text style={styles.buttonText}>View Details</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </ImageBackground>
-            </View>
-          ))}
-        </ScrollView>
+        {loading ? (
+        <Text style={styles.loadingText}>Loading Events...</Text>
+      ) : events.length > 0 ? (
+        <FlatList
+  data={events}
+  keyExtractor={(item) => item.id?.toString() || Math.random().toString()} // Ensure key is a string
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  contentContainerStyle={styles.eventScrollView}
+  renderItem={({ item, index }) => (
+    <View style={styles.eventCardContainer}>
+      <ImageBackground 
+        source={eventImages[index % eventImages.length]}  // Cycle through images
+        style={styles.eventCardBackground}
+        resizeMode="cover"
+      >
+        <View style={styles.eventCardOverlay}>
+          <Text style={styles.eventName}>{item.tripName}</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+              style={[styles.button, styles.endEventButton]} 
+              onPress={() => handleEndEventPress(item.tripName)}
+            >
+              <Text style={styles.buttonText}>End Event</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.button, styles.viewEventButton]} 
+              onPress={()=>goToTripDetails(item._id)}
+            >
+              <Text style={styles.buttonText}>View Details</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
+  )}
+/>
+      ) : (
+        <View style={styles.noEventsContainer}>
+          <Text style={styles.noEventsText}>You don't have any events yet.</Text>
+          <Text style={styles.noEventsSubtext}>Create a new event to start tracking your trips!</Text>
+        </View>
+      )}
 
         {/* "Add Trip" Button - Repositioned below My Events section */}
         <TouchableOpacity 
@@ -224,6 +252,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#f16d95",
     marginTop: 8,
     borderRadius: 2
+  },
+  noEventsContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    backgroundColor: "rgba(240, 240, 248, 0.7)",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#e0e0e8",
+    marginBottom: 20,
+  },
+  noEventsText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#470967",
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  noEventsSubtext: {
+    fontSize: 14,
+    color: "#666",
+    textAlign: "center",
   },
   eventScrollView: {
     paddingHorizontal: 20,

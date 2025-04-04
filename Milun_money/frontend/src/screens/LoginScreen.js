@@ -28,7 +28,8 @@ const LoginScreen = () => {
       } else {
         // Store token in AsyncStorage (handled in login_post)
         const userId = response.user?._id; // Ensure backend sends the user object
-        navigation.navigate("Home", { userId }); // ✅ Fixed navigation
+        console.log("Recived user Id :" , {userId})
+        navigation.navigate("Home", {userId}); // ✅ Fixed navigation
       }
     } catch (error) {
       console.error("Login error:", error);

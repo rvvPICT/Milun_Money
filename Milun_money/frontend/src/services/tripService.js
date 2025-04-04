@@ -1,6 +1,6 @@
 import axios from "axios" ;
 
-const API_BASE_URL = "http://localhost:5001/api/trips" ;
+const API_BASE_URL = "http://10.0.2.2:5001/api/trips" ;
 
 export const createTrip = async (tripData) => {
     try {
@@ -16,7 +16,9 @@ export const createTrip = async (tripData) => {
 
 export const getTrip = async (tripId) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/${tripId}`) ;
+        console.log("In Api : Received tripId " , tripId) ;
+        console.log("Sending request on :" ,`${API_BASE_URL}/${tripId}`) ;
+        const response = await axios.get(`${API_BASE_URL}/${tripId}`) ;
         return response.data ;
     }catch(error){
         console.log("Error fetching trip :",error.response?.data || error.message) ;
@@ -37,6 +39,8 @@ export const getAllTrips = async() =>{
 
 export const getUserTrips = async (userId) => {
     try {
+      console.log("In api services of getUserTrip:")
+      console.log("Making request to :" ,`${API_BASE_URL}/user/${userId}`)
       const response = await axios.get(`${API_BASE_URL}/user/${userId}`);
       return response.data;
     } catch (error) {

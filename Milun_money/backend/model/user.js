@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    Trips : [
+    trips : [
         {
             type: mongoose.Schema.Types.ObjectId ,
             ref : "Trip"

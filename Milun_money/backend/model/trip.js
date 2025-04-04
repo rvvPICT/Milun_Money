@@ -29,6 +29,7 @@ const tripSchema = new mongoose.Schema({
         default: [],
     }],
 
+
 }, { timestamps: true });
 
 const Trip = mongoose.model("Trip", tripSchema);

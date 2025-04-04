@@ -1,14 +1,12 @@
 import React from 'react';
-import { View, Text, Image, Pressable, StyleSheet, Alert } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet, Alert, userId } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-
 const Navbar = (props) => {
-  const { title, showBackButton = true, onBackPress, customAction } = props;
+  const { title, showBackButton = true, onBackPress, customAction, userId } = props;
   const navigation = useNavigation();
   const route = useRoute();
 
-  // Default confirmation dialog for unsaved changes
   const showConfirmationAlert = () => {
     Alert.alert(
       "Unsaved Changes",
@@ -28,19 +26,22 @@ const Navbar = (props) => {
     );
   };
 
-  const screensWithConfirmation = ["AddExpense", "EditBudget", "CreateBudget"];
+  const primaryScreens = ["AddEvent", "ExpenseScreen", "AddPaymentPage"];
 
   const handleBackPress = () => {
-      navigation.navigate("Home");
-};
+    if (route.name === "AddEvent") showConfirmationAlert();
+    else if (primaryScreens.includes(route.name)) {
+      navigation.navigate("Home", { userId });
+    } else {
+      navigation.goBack();
+    }
+  };
 
   return (
     <View style={styles.navbar}>
-      {/* Back Button (only shown if showBackButton is true) */}
       {showBackButton && (
         <Pressable onPress={handleBackPress} style={styles.backButton}>
           <Image 
-            // You'll need to add your own back arrow icon
             source={require('../assets/backarrow.png')} 
             style={styles.backIcon} 
             resizeMode='contain'
@@ -48,10 +49,8 @@ const Navbar = (props) => {
         </Pressable>
       )}
 
-      {/* Title */}
       <Text style={styles.title}>{title}</Text>
 
-      {/* Optional custom action on the right */}
       {customAction && (
         <Pressable onPress={customAction.onPress} style={styles.actionButton}>
           {customAction.icon ? (

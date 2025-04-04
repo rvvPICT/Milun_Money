@@ -56,10 +56,12 @@ export const createTrip = async (req, res) => {
 export const getTrip = async (req, res) => {
     const { tripId } = req.params;
     try {
-        const trip = await Trip.findById(tripId);fr
+        const trip = await Trip.findById(tripId).populate("members");
         if (!trip) {
             return res.status(404).json({ success: false, message: "Trip not found" });
         }
+        console.log(trip) ;
+        console.log("Response sent ! ")
         res.status(200).json({ success: true, trip });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -91,13 +93,14 @@ export const getAllTrips = async (req, res) => {
 export const getUserTrips = async (req, res) => {
     try {
         const { userId } = req.params;
-
+        console.log("Received userId in controller :" , userId) ;
         // Validate user
         const user = await User.findById(userId).populate("trips");
         if (!user) {
+            console.log("User not found for ID :" , userId) ;
             return res.status(404).json({ success: false, message: "User not found." });
         }
-
+        console.log("Fetched user with trips:" , user.trips) ;
         res.status(200).json({ success: true, trips: user.trips });
     } catch (error) {
         console.error("Error fetching user's trips:", error);

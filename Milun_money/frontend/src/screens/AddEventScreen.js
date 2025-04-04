@@ -30,7 +30,6 @@ const AddEventPage = ({ navigation }) => {
     const tripData = {
       tripName,
       tripDescription,
-      startDate,
       members,
     };
 
