@@ -39,7 +39,7 @@ const HomeScreen = ({route}) => {
     }
   }
   const handleProfilePress = () => {
-    Alert.alert("Profile Button Pressed", "You can navigate to Profile Screen!");
+    navigation.navigate("Profile" , {userId}) 
   };
 
   const handleAddEventPress = () => {
